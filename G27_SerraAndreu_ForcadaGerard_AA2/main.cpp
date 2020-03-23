@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "input/input.h"
+#include "input.h"
 
 
 int main(int argc, char** argv)
