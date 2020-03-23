@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1022
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "G27_SerraAndreu_ForcadaGerard_AA2", "G27_SerraAndreu_ForcadaGerard_AA2\G27_SerraAndreu_ForcadaGerard_AA2.vcxproj", "{FC762B24-D73F-4A42-A856-05C12798E988}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC762B24-D73F-4A42-A856-05C12798E988}.Debug|x64.ActiveCfg = Debug|x64
+		{FC762B24-D73F-4A42-A856-05C12798E988}.Debug|x64.Build.0 = Debug|x64
+		{FC762B24-D73F-4A42-A856-05C12798E988}.Debug|x86.ActiveCfg = Debug|Win32
+		{FC762B24-D73F-4A42-A856-05C12798E988}.Debug|x86.Build.0 = Debug|Win32
+		{FC762B24-D73F-4A42-A856-05C12798E988}.Release|x64.ActiveCfg = Release|x64
+		{FC762B24-D73F-4A42-A856-05C12798E988}.Release|x64.Build.0 = Release|x64
+		{FC762B24-D73F-4A42-A856-05C12798E988}.Release|x86.ActiveCfg = Release|Win32
+		{FC762B24-D73F-4A42-A856-05C12798E988}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0E8709B9-D812-4BF7-A1EE-269A45698AD9}
+	EndGlobalSection
+EndGlobal
