@@ -2,17 +2,11 @@
 #include <iostream>
 #include <Windows.h>
 
-enum class InputKey {UP, DOWN, LEFT, RIGHT, ESC, FIRE, COUNT};
+enum class InputKey {UP1, DOWN1, LEFT1, RIGHT1, UP2, DOWN2, LEFT2, RIGHT2, ESC, COUNT};
 
 struct InputData {
+public:
 	bool keys[(int)InputKey::COUNT] = {};
 
-	void Update() {
-		keys[(int)InputKey::ESC] = GetAsyncKeyState(VK_ESCAPE);
-		keys[(int)InputKey::UP] = GetAsyncKeyState(VK_UP);
-		keys[(int)InputKey::DOWN] = GetAsyncKeyState(VK_DOWN);
-		keys[(int)InputKey::LEFT] = GetAsyncKeyState(VK_LEFT);
-		keys[(int)InputKey::RIGHT] = GetAsyncKeyState(VK_RIGHT);
-		keys[(int)InputKey::FIRE] = GetAsyncKeyState(VK_SPACE);
-	}
+	void UpdateKeys();
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include "Types.h"
 #include "Player.h"
+#include "InputManager.h"
 
 struct Map
 {
@@ -12,7 +13,6 @@ private:
 	const int numPlayers = 2;
 public:
 	void InitializeMap();
-	void UpdateMap();
+	void UpdateMap(InputData keyboard); ///Check colisions i rebre la nova pos
 	void PrintMap();
-	void PrintScore();
 };

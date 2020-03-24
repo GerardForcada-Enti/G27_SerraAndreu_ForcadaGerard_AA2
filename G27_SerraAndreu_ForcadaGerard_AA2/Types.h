@@ -12,3 +12,5 @@ public:
 	int x;
 	int y;
 };
+
+enum MOVEMENT{ UP, DOWN, RIGHT, LEFT, COUNT };
