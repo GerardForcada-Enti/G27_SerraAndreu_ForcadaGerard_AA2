@@ -37,16 +37,79 @@ void Map::InitializeMap()
 
 void Map::UpdateMap(InputData keyboard)
 {
-	///Check colisions i rebre la nova pos
-	if (keyboard.keys[(int)InputKey::UP1]) m_players[0].MovePlayer(MOVEMENT::UP);
-	else if (keyboard.keys[(int)InputKey::UP2]) m_players[1].MovePlayer(MOVEMENT::UP);
-	else if (keyboard.keys[(int)InputKey::DOWN1]) m_players[0].MovePlayer(MOVEMENT::DOWN);
-	else if (keyboard.keys[(int)InputKey::DOWN2]) m_players[1].MovePlayer(MOVEMENT::DOWN);
-	else if (keyboard.keys[(int)InputKey::RIGHT1]) m_players[0].MovePlayer(MOVEMENT::RIGHT);
-	else if (keyboard.keys[(int)InputKey::RIGHT2]) m_players[1].MovePlayer(MOVEMENT::RIGHT);
-	else if (keyboard.keys[(int)InputKey::LEFT1]) m_players[0].MovePlayer(MOVEMENT::LEFT);
-	else if (keyboard.keys[(int)InputKey::LEFT2]) m_players[1].MovePlayer(MOVEMENT::LEFT);
-
+	if (keyboard.keys[(int)InputKey::UP1]) 
+	{ 
+		if (this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y - 1] != 'X' || this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y - 1] != '*')
+		{
+			this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y] = ' ';
+			m_players[0].MovePlayer(MOVEMENT::UP);
+			this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y] = '1';
+		}
+	}
+	else if (keyboard.keys[(int)InputKey::UP2]) 
+	{
+		if (this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y - 1] != 'X' || this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y - 1] != '*')
+		{
+			this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y] = ' ';
+			m_players[1].MovePlayer(MOVEMENT::UP);
+			this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y] = '2';
+		}	
+	}
+	else if (keyboard.keys[(int)InputKey::DOWN1])
+	{
+		if (this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y + 1] != 'X' || this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y + 1] != '*')
+		{
+			this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y] = ' ';
+			m_players[0].MovePlayer(MOVEMENT::DOWN);
+			this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y] = '1';
+		}	
+	}
+	else if (keyboard.keys[(int)InputKey::DOWN2])
+	{
+		if (this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y + 1] != 'X' || this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y + 1] != '*')
+		{
+			this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y] = ' ';
+			m_players[1].MovePlayer(MOVEMENT::DOWN);
+			this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y] = '2';
+		}
+	}
+	else if (keyboard.keys[(int)InputKey::RIGHT1])
+	{
+		if (this->m_map[m_players[0].GetPos().x + 1][m_players[0].GetPos().y] != 'X' || this->m_map[m_players[0].GetPos().x + 1][m_players[0].GetPos().y] != '*')
+		{
+			this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y] = ' ';
+			m_players[0].MovePlayer(MOVEMENT::RIGHT);
+			this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y] = '1';
+		}
+	}
+	else if (keyboard.keys[(int)InputKey::RIGHT2])
+	{
+		if (this->m_map[m_players[1].GetPos().x + 1][m_players[1].GetPos().y] != 'X' || this->m_map[m_players[1].GetPos().x + 1][m_players[1].GetPos().y] != '*')
+		{
+			this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y] = ' ';
+			m_players[1].MovePlayer(MOVEMENT::RIGHT);
+			this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y] = '2';
+		}
+	}
+	else if (keyboard.keys[(int)InputKey::LEFT1])
+	{
+		if (this->m_map[m_players[0].GetPos().x - 1][m_players[0].GetPos().y] != 'X' || this->m_map[m_players[0].GetPos().x - 1][m_players[0].GetPos().y] != '*')
+		{
+			this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y] = ' ';
+			m_players[0].MovePlayer(MOVEMENT::LEFT);
+			this->m_map[m_players[0].GetPos().x][m_players[0].GetPos().y] = '1';
+		}
+	}
+	else if (keyboard.keys[(int)InputKey::LEFT2])
+	{
+		if (this->m_map[m_players[1].GetPos().x - 1][m_players[1].GetPos().y] != 'X' || this->m_map[m_players[1].GetPos().x - 1][m_players[1].GetPos().y] != '*')
+		{
+			this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y] = ' ';
+			m_players[1].MovePlayer(MOVEMENT::LEFT);
+			this->m_map[m_players[1].GetPos().x][m_players[1].GetPos().y] = '2';
+		}
+	}
+	
 }
 
 void Map::PrintMap()
@@ -66,9 +129,15 @@ void Map::PrintMap()
 		std::cout << std::endl;
 	}
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 224);
-	std::cout << std::endl << "*------SCORE------* ";
+	std::cout << std::endl << "*------SCORE------* "; 
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-	std::cout << std::endl << "Player 1: " << m_players[0].GetScore() << std::endl;
+	std::cout << std::endl << "Player 1: ";
+	m_players[0].PrintScore();
+	std::cout << std::endl;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
-	std::cout << "Player 2: " << m_players[1].GetScore() << std::endl;
+	std::cout << "Player 2: "; 
+	m_players[1].PrintScore();
+	std::cout<< std::endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
 }
+   

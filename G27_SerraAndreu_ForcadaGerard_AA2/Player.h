@@ -14,6 +14,6 @@ public:
 	/*void AddPoints();
 	void Explode();
 	void Die();*/
-	int GetScore();
-	
+	void PrintScore();
+	Vec2 GetPos();
 };

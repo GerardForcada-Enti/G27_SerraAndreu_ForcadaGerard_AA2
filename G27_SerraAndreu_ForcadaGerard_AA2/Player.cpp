@@ -5,23 +5,28 @@ void Player::MovePlayer(MOVEMENT mov)
 	switch (mov)
 	{
 	case UP:
-		pos.y--;
+		pos.x--;
 		break;
 	case DOWN:
-		pos.y++;
-		break;
-	case RIGHT:
 		pos.x++;
 		break;
+	case RIGHT:
+		pos.y++;
+		break;
 	case LEFT:
-		pos.x--;
+		pos.y--;
 	case COUNT:
 	default:
 		break;
 	}
 }
 
-int Player::GetScore()
+void Player::PrintScore()
 {
-	return score;
+	std::cout << score;
+}
+
+Vec2 Player::GetPos()
+{
+	return pos;
 }

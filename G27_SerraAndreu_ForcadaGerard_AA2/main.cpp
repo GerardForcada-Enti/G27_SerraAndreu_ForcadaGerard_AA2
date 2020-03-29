@@ -14,12 +14,11 @@ int main()
 	{
 		keyboard.UpdateKeys();
 		system("cls");
-		//gameloop
-		board.UpdateMap(keyboard);
 		board.PrintMap();
-		Sleep(60);
+		board.UpdateMap(keyboard);
+		Sleep(120);
 	}
 
-
+	std::cout << "Game end" << std::endl;
 	system("pause");
 }
