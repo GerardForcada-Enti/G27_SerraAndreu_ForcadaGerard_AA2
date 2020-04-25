@@ -11,8 +11,10 @@ private:
 	int width;
 	int height;
 	const int numPlayers = 2;
+	bool gameEnd;
 public:
 	void InitializeMap();
 	void UpdateMap(InputData keyboard); ///Check colisions i rebre la nova pos
 	void PrintMap();
+	bool GetGameEnd();
 };

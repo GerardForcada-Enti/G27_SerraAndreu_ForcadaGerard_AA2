@@ -1,24 +1,10 @@
 #pragma once
-#include <string>
-#include "InputManager.h"
-#include "Map.h"
+#include "Game.h"
 
 
 int main()
 {
-	Map board;
-	InputData keyboard;
-	board.InitializeMap();
+	Game m_game;
 
-	while (!keyboard.keys[(int)InputKey::ESC])
-	{
-		keyboard.UpdateKeys();
-		system("cls");
-		board.PrintMap();
-		board.UpdateMap(keyboard);
-		Sleep(120);
-	}
-
-	std::cout << "Game end" << std::endl;
-	system("pause");
+	m_game.Play();
 }

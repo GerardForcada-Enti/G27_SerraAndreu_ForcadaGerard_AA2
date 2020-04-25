@@ -5,16 +5,16 @@ void Player::MovePlayer(MOVEMENT mov)
 	switch (mov)
 	{
 	case UP:
-		pos.x--;
+		pos.y--;
 		break;
 	case DOWN:
-		pos.x++;
-		break;
-	case RIGHT:
 		pos.y++;
 		break;
+	case RIGHT:
+		pos.x++;
+		break;
 	case LEFT:
-		pos.y--;
+		pos.x--;
 	case COUNT:
 	default:
 		break;
@@ -29,4 +29,14 @@ void Player::PrintScore()
 Vec2 Player::GetPos()
 {
 	return pos;
+}
+
+void Player::SetLives(int val)
+{
+	this->lives = val;
+}
+
+int Player::GetLives()
+{
+	return lives;
 }
