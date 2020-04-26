@@ -14,7 +14,8 @@ void InputData::UpdateKeys() {
 	keys[(int)InputKey::LEFT2] = GetAsyncKeyState(KEY_A);
 	keys[(int)InputKey::RIGHT2] = GetAsyncKeyState(KEY_D);
 	
-	keys[(int)InputKey::SPACEBAR] = GetAsyncKeyState(VK_SPACE);
+	keys[(int)InputKey::SPACEBAR] = GetAsyncKeyState(VK_SPACE); //Exit GAMESTATE::PAUSE/INIT and bomb player 2
+	keys[(int)InputKey::RCTL] = GetAsyncKeyState(VK_RCONTROL);	//Bomb player 1
 	keys[(int)InputKey::PAUSE] = GetAsyncKeyState(KEY_P);
 
 }

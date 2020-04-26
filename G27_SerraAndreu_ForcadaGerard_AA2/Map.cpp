@@ -38,6 +38,8 @@ void Map::InitializeMap()
 
 void Map::UpdateMap(InputData keyboard)
 {
+	//bomb vars
+	bool bomb1 = false;
 	//Set player 1 position
 	Vec2 plPos = m_players[0].GetPos();
 	Vec2 newPos = m_players[0].GetPos();
@@ -48,7 +50,10 @@ void Map::UpdateMap(InputData keyboard)
 		//char cell = m_map[newPos.x][newPos.y];
 	if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') &&	(newPos.y >= 0))
 		{
-			m_map[plPos.x][plPos.y] = ' ';
+			if (bomb1) 
+				m_map[plPos.x][plPos.y] = '+';
+			else
+				m_map[plPos.x][plPos.y] = ' ';
 			m_players[0].MovePlayer(MOVEMENT::UP);
 			m_map[newPos.x][newPos.y] = '1';
 		}
@@ -56,9 +61,12 @@ void Map::UpdateMap(InputData keyboard)
 	else if (keyboard.keys[(int)InputKey::DOWN1])
 	{
 		newPos = Vec2(plPos.x, plPos.y + 1);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y <= height - 1))
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y <= height))
 		{
-			m_map[plPos.x][plPos.y] = ' ';
+			if (bomb1)
+				m_map[plPos.x][plPos.y] = '+';
+			else
+				m_map[plPos.x][plPos.y] = ' ';
 			m_players[0].MovePlayer(MOVEMENT::DOWN);
 			m_map[newPos.x][newPos.y] = '1';
 
@@ -67,8 +75,11 @@ void Map::UpdateMap(InputData keyboard)
 	else if (keyboard.keys[(int)InputKey::RIGHT1])
 	{
 		newPos = Vec2(plPos.x + 1, plPos.y);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x <= width - 1)) {
-			m_map[plPos.x][plPos.y] = ' ';
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x <= width)) {
+			if (bomb1)
+				m_map[plPos.x][plPos.y] = '+';
+			else
+				m_map[plPos.x][plPos.y] = ' ';
 			m_players[0].MovePlayer(MOVEMENT::RIGHT);
 			m_map[newPos.x][newPos.y] = '1';
 		}
@@ -79,7 +90,10 @@ void Map::UpdateMap(InputData keyboard)
 		newPos = Vec2(plPos.x - 1, plPos.y);
 		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x > 0))
 		{
-			m_map[plPos.x][plPos.y] = ' ';
+			if (bomb1)
+				m_map[plPos.x][plPos.y] = '+';
+			else
+				m_map[plPos.x][plPos.y] = ' ';
 			m_players[0].MovePlayer(MOVEMENT::LEFT);
 			m_map[newPos.x][newPos.y] = '1';
 		}
@@ -110,7 +124,7 @@ void Map::UpdateMap(InputData keyboard)
 	else if (keyboard.keys[(int)InputKey::RIGHT2])
 	{
 		newPos = Vec2(plPos.x + 1, plPos.y);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y <= height - 1))
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y <= height))
 		{
 			m_map[plPos.x][plPos.y] = ' ';
 			m_players[0].MovePlayer(MOVEMENT::RIGHT);
@@ -127,8 +141,95 @@ void Map::UpdateMap(InputData keyboard)
 			m_map[newPos.x][newPos.y] = '1';
 		}
 	}
+	
 
-
+	//Bombs
+	std::chrono::steady_clock::time_point bombTimep1;
+	plPos = m_players[0].GetPos();
+	
+	if (keyboard.keys[(int)InputKey::RCTL])
+	{
+		//spawn bomb
+		this->m_map[plPos.x][plPos.y] = '+';
+		bomb1 = true;
+		//counter 2 sec 
+		bombTimep1 = std::chrono::high_resolution_clock::now();
+	}
+	if (bomb1)
+	{
+		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep1).count() >= 2)
+		{
+		
+		if (this->m_map[plPos.x - 1][plPos.y] != 'X')
+		{
+			if (this->m_map[plPos.x - 2][plPos.y] != 'X' && this->m_map[plPos.x - 1][plPos.y] != '*')
+			{
+				this->m_map[plPos.x - 2][plPos.y] = '-';
+			}
+			this->m_map[plPos.x - 1][plPos.y] = '-';
+		}
+		if (this->m_map[plPos.x + 1][plPos.y] != 'X')
+		{
+			if (this->m_map[plPos.x + 2][plPos.y] != 'X' && this->m_map[plPos.x + 1][plPos.y] != '*')
+			{
+				this->m_map[plPos.x + 2][plPos.y] = '-';
+			}
+			this->m_map[plPos.x + 1][plPos.y] = '-';
+		}
+		if (this->m_map[plPos.x][plPos.y - 1] != 'X')
+		{
+			if (this->m_map[plPos.x][plPos.y - 2] != 'X' && this->m_map[plPos.x][plPos.y - 1] != '*')
+			{
+				this->m_map[plPos.x][plPos.y - 2] = '-';
+			}
+			this->m_map[plPos.x][plPos.y - 1] = '-';
+		}
+		if (this->m_map[plPos.x][plPos.y + 1] != 'X')
+		{
+			if (this->m_map[plPos.x][plPos.y + 2] != 'X' && this->m_map[plPos.x][plPos.y + 1] != '*')
+			{
+				this->m_map[plPos.x][plPos.y + 2] = '-';
+			}
+			this->m_map[plPos.x][plPos.y + 1] = '-';
+		}
+		}
+		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep1).count() >= 3)
+		{
+			if (this->m_map[plPos.x - 1][plPos.y] == '-')
+			{
+				if (this->m_map[plPos.x - 2][plPos.y] == '-' )
+				{
+					this->m_map[plPos.x - 2][plPos.y] = ' ';
+				}
+				this->m_map[plPos.x - 1][plPos.y] = ' ';
+			}
+			if (this->m_map[plPos.x + 1][plPos.y] == '-')
+			{
+				if (this->m_map[plPos.x + 2][plPos.y] == '-')
+				{
+					this->m_map[plPos.x + 2][plPos.y] = ' ';
+				}
+				this->m_map[plPos.x + 1][plPos.y] = ' ';
+			}
+			if (this->m_map[plPos.x][plPos.y - 1] == '-')
+			{
+				if (this->m_map[plPos.x][plPos.y - 2] == '-')
+				{
+					this->m_map[plPos.x][plPos.y - 2] = ' ';
+				}
+				this->m_map[plPos.x][plPos.y - 1] = ' ';
+			}
+			if (this->m_map[plPos.x][plPos.y + 1] == '-')
+			{
+				if (this->m_map[plPos.x][plPos.y + 2] == '-')
+				{
+					this->m_map[plPos.x][plPos.y + 2] = ' ';
+				}
+				this->m_map[plPos.x][plPos.y + 1] = ' ';
+			}
+			bomb1 = false;
+		}
+	}
 
 	//Game ended
 	if (this->m_players[0].GetLives() == 0) gameEnd = true;
@@ -153,7 +254,9 @@ void Map::PrintMap()
 			if (m_map[i][j] == '1')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 170);//player 1
 			else if (m_map[i][j] == '2')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 221);//player 2
 			else if (m_map[i][j] == 'X')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 136);//muros x
-			else if (m_map[i][j] == '*')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 119);//minas *
+			else if (m_map[i][j] == '*')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 119);//muros destruct *
+			else if (m_map[i][j] == '+')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 204);//bomba *
+			else if (m_map[i][j] == '-')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 238);//bomba destruct *
 			std::cout << m_map[i][j] << ' ';
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
 		}

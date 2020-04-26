@@ -1,4 +1,7 @@
 #pragma once
+#include <chrono>
+#include <ctime>
+#include <Windows.h>
 #include "Types.h"
 #include "Player.h"
 #include "InputManager.h"
