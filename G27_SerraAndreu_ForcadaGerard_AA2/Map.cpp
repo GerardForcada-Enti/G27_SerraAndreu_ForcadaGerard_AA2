@@ -159,37 +159,110 @@ void Map::UpdateMap(InputData keyboard)
 	{
 		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep1).count() >= 2)
 		{
-		
 		if (this->m_map[plPos.x - 1][plPos.y] != 'X')
 		{
 			if (this->m_map[plPos.x - 2][plPos.y] != 'X' && this->m_map[plPos.x - 1][plPos.y] != '*')
 			{
+				if(this->m_map[plPos.x - 2][plPos.y] == '*')
+					this->m_players[0].IncrScore(15);
 				this->m_map[plPos.x - 2][plPos.y] = '-';
+				if (this->m_map[plPos.x - 2][plPos.y] == '2')
+				{
+					this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+					this->m_players[0].IncrScore(100);
+				}
+				if(this->m_map[plPos.x - 2][plPos.y] == '1')
+					this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
 			}
+			if(this->m_map[plPos.x - 1][plPos.y] == '*')
+				this->m_players[0].IncrScore(15);
+			if (this->m_map[plPos.x - 1][plPos.y] == '2') 
+			{
+				this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+				this->m_players[0].IncrScore(100);
+			}
+			if (this->m_map[plPos.x - 1][plPos.y] == '1')
+				this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
 			this->m_map[plPos.x - 1][plPos.y] = '-';
+			
 		}
 		if (this->m_map[plPos.x + 1][plPos.y] != 'X')
 		{
 			if (this->m_map[plPos.x + 2][plPos.y] != 'X' && this->m_map[plPos.x + 1][plPos.y] != '*')
 			{
+				if(this->m_map[plPos.x + 2][plPos.y] == '*')
+					this->m_players[0].IncrScore(15);
+				if (this->m_map[plPos.x + 2][plPos.y] == '2')
+				{
+					this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+					this->m_players[0].IncrScore(100);
+				}
+				if(this->m_map[plPos.x + 2][plPos.y] == '1')
+					this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
 				this->m_map[plPos.x + 2][plPos.y] = '-';
 			}
+			if(this->m_map[plPos.x + 1][plPos.y] == '*')
+				this->m_players[0].IncrScore(15);
+			if (this->m_map[plPos.x + 1][plPos.y] == '2')
+			{
+				this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+				this->m_players[0].IncrScore(100);
+			}
+			if (this->m_map[plPos.x + 1][plPos.y] == '1')
+				this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
 			this->m_map[plPos.x + 1][plPos.y] = '-';
+			
 		}
 		if (this->m_map[plPos.x][plPos.y - 1] != 'X')
 		{
 			if (this->m_map[plPos.x][plPos.y - 2] != 'X' && this->m_map[plPos.x][plPos.y - 1] != '*')
 			{
+				if(this->m_map[plPos.x][plPos.y - 2] == '*')
+					this->m_players[0].IncrScore(15);
+				if (this->m_map[plPos.x][plPos.y - 2] == '2')
+				{
+					this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+					this->m_players[0].IncrScore(100);
+				}
+				if(this->m_map[plPos.x][plPos.y - 2] == '1')
+					this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
 				this->m_map[plPos.x][plPos.y - 2] = '-';
 			}
+			if(this->m_map[plPos.x][plPos.y - 1] == '*')
+				this->m_players[0].IncrScore(15);
+			if (this->m_map[plPos.x][plPos.y - 1] == '2')
+			{
+				this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+				this->m_players[0].IncrScore(100);
+			}
+			if (this->m_map[plPos.x][plPos.y - 1] == '1')
+				this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
 			this->m_map[plPos.x][plPos.y - 1] = '-';
 		}
 		if (this->m_map[plPos.x][plPos.y + 1] != 'X')
 		{
 			if (this->m_map[plPos.x][plPos.y + 2] != 'X' && this->m_map[plPos.x][plPos.y + 1] != '*')
 			{
+				if(this->m_map[plPos.x][plPos.y + 2] == '*')
+					this->m_players[0].IncrScore(15);
+				if (this->m_map[plPos.x][plPos.y + 2] == '2')
+				{
+					this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+					this->m_players[0].IncrScore(100);
+				}
+				if(this->m_map[plPos.x][plPos.y + 2] == '1')
+					this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
 				this->m_map[plPos.x][plPos.y + 2] = '-';
 			}
+			if (this->m_map[plPos.x][plPos.y + 1] == '*')
+				this->m_players[0].IncrScore(15);
+			if (this->m_map[plPos.x][plPos.y + 1] == '2')
+			{
+				this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+				this->m_players[0].IncrScore(100);
+			}
+			if (this->m_map[plPos.x][plPos.y + 1] == '1')
+				this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
 			this->m_map[plPos.x][plPos.y + 1] = '-';
 		}
 		}

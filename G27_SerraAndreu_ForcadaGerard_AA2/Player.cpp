@@ -40,3 +40,8 @@ int Player::GetLives()
 {
 	return lives;
 }
+
+void Player::IncrScore(int val)
+{
+	this->score += val;
+}

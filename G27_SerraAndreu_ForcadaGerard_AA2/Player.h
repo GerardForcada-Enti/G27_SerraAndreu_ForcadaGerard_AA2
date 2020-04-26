@@ -17,4 +17,5 @@ public:
 	Vec2 GetPos();
 	void SetLives(int val);
 	int GetLives();
+	void IncrScore(int val);
 };

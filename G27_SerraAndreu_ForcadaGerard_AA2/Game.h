@@ -18,9 +18,7 @@ private:
 
 
 /*
--bombes
-	-vides
-	-punts
+-bombes (player 2) mes bugs
 
 -Moviment player2
 */
