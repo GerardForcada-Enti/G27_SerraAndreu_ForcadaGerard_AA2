@@ -63,7 +63,7 @@ void Map::UpdateMap(InputData keyboard)
 	}
 	if (bomb1)
 	{
-		//if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep1).count() >= 2)
+		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep1).count() >= 2)
 		{
 			if (this->m_map[plPos.x - 1][plPos.y] != 'X')
 			{
@@ -274,45 +274,48 @@ void Map::UpdateMap(InputData keyboard)
 	}
 
 	//Set player 2 position			-----
-	plPos = m_players[1].GetPos();
-	newPos = m_players[1].GetPos();
+	Vec2 p2Pos = m_players[1].GetPos();
+	Vec2 newPos2 = m_players[1].GetPos();
+
+	//p2Pos = m_players[1].GetPos();
+	//newPos2 = m_players[1].GetPos();
 	if (keyboard.keys[(int)InputKey::UP2])
 	{
-		newPos = Vec2(plPos.x, plPos.y - 1);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x > 0))
+		newPos2 = Vec2(p2Pos.x, p2Pos.y - 1);
+		if ((m_map[newPos2.x][newPos2.y] != 'X') && (m_map[newPos2.x][newPos2.y] != '*') && (newPos2.x > 0))
 		{
-			m_map[plPos.x][plPos.y] = ' ';
+			m_map[p2Pos.x][p2Pos.y] = ' ';
 			m_players[1].MovePlayer(MOVEMENT::UP);
-			m_map[newPos.x][newPos.y] = '1';
+			m_map[newPos2.x][newPos2.y] = '1';
 		}
 	}
 	else if (keyboard.keys[(int)InputKey::DOWN2])
 	{
-		newPos = Vec2(plPos.x, plPos.y + 1);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x <= width - 1)) {
-			m_map[plPos.x][plPos.y] = ' ';
+		newPos2 = Vec2(p2Pos.x, p2Pos.y + 1);
+		if ((m_map[newPos2.x][newPos2.y] != 'X') && (m_map[newPos2.x][newPos2.y] != '*') && (newPos2.x <= width - 1)) {
+			m_map[p2Pos.x][p2Pos.y] = ' ';
 			m_players[0].MovePlayer(MOVEMENT::DOWN);
-			m_map[newPos.x][newPos.y] = '1';
+			m_map[newPos2.x][newPos2.y] = '1';
 		}
 	}
 	else if (keyboard.keys[(int)InputKey::RIGHT2])
 	{
-		newPos = Vec2(plPos.x + 1, plPos.y);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y <= height))
+		newPos2 = Vec2(p2Pos.x + 1, p2Pos.y);
+		if ((m_map[newPos2.x][newPos2.y] != 'X') && (m_map[newPos2.x][newPos2.y] != '*') && (newPos2.y <= height))
 		{
-			m_map[plPos.x][plPos.y] = ' ';
+			m_map[p2Pos.x][p2Pos.y] = ' ';
 			m_players[0].MovePlayer(MOVEMENT::RIGHT);
-			m_map[newPos.x][newPos.y] = '1';
+			m_map[newPos2.x][newPos2.y] = '1';
 		}
 	}
 	else if (keyboard.keys[(int)InputKey::LEFT2])
 	{
-		newPos = Vec2(plPos.x - 1, plPos.y);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y >= 0))
+		newPos2 = Vec2(p2Pos.x - 1, p2Pos.y);
+		if ((m_map[newPos2.x][newPos2.y] != 'X') && (m_map[newPos2.x][newPos2.y] != '*') && (newPos2.y >= 0))
 		{
-			m_map[plPos.x][plPos.y] = ' ';
+			m_map[p2Pos.x][p2Pos.y] = ' ';
 			m_players[1].MovePlayer(MOVEMENT::LEFT);
-			m_map[newPos.x][newPos.y] = '1';
+			m_map[newPos2.x][newPos2.y] = '1';
 		}
 	}
 	
