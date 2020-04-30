@@ -2,14 +2,14 @@
 
 Game::Game()
 {
-	state = GameState::PLAY;
+	state = GameState::INIT;
 	board.InitializeMap();
 }
 
 void Game::Play()
 {
 	std::chrono::steady_clock::time_point timerChrono;
-	std::chrono::seconds timer(60);
+	int timer = 60;
 	bool enterPlay = true;
 	while (!keyboard.keys[(int)InputKey::ESC])
 	{
@@ -38,13 +38,15 @@ void Game::Play()
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 185);
 			std::cout << "-*-*-GAME-*-*-" << std::endl;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			std::cout << "Time: " << (int)(timer - std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - timerChrono)) << 's';
+			timer = 60 - std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - timerChrono).count();
+			std::cout << "Time: " << timer << 's';
 			board.PrintMap();
-			board.UpdateMap(keyboard);
-			if (keyboard.keys[(int)InputKey::PAUSE])  state = GameState::PAUSE; enterPlay = true;
-			if (board.GetGameEnd()) state = GameState::GAMEOVER; enterPlay = true;
-			Sleep(60);
-			}
+			board.UpdateMap(keyboard,timer);
+			if (keyboard.keys[(int)InputKey::PAUSE])  {	state = GameState::PAUSE; enterPlay = true; }
+			if (board.GetGameEnd())  { state = GameState::GAMEOVER; enterPlay = true; }
+			Sleep(100);
+			if(timer <= 0) { state = GameState::GAMEOVER; enterPlay = true; }
+		}
 			break;
 		case GameState::PAUSE:
 		{

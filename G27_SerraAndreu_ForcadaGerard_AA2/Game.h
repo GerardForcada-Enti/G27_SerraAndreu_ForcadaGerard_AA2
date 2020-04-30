@@ -15,10 +15,3 @@ private:
 	InputData keyboard;
 	
 };
-
-
-/*
--bombes bugs
-
--chrono
-*/

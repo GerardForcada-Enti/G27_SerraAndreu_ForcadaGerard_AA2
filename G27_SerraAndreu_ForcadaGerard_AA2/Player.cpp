@@ -45,3 +45,8 @@ void Player::IncrScore(int val)
 {
 	this->score += val;
 }
+
+void Player::SetPos(Vec2 n_pos)
+{
+	this->pos = n_pos;
+}
