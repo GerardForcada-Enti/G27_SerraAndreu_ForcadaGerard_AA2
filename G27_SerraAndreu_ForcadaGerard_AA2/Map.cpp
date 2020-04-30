@@ -22,11 +22,11 @@ void Map::InitializeMap()
 				m_map[i][j] = aux2[j];
 				if (aux2[j] == '1')//Pasar pos Player1
 				{
-					m_players[0] = Player(j, i);
+					m_players[0] = Player(i,j);
 				}
 				if (aux2[j] == '2')//Pasar pos Player2
 				{
-					m_players[1] = Player(j, i);
+					m_players[1] = Player(i, j);
 				}
 			}
 
@@ -40,52 +40,12 @@ void Map::UpdateMap(InputData keyboard)
 {
 	//bomb vars
 	bool bomb1 = false;
+	bool bomb2 = false;
 	//Set player 1 position
 	Vec2 plPos = m_players[0].GetPos();
 	Vec2 newPos = m_players[0].GetPos();
 
 	if (keyboard.keys[(int)InputKey::UP1])
-	{
-		newPos = Vec2(plPos.x, plPos.y - 1);
-		//char cell = m_map[newPos.x][newPos.y];
-	if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') &&	(newPos.y >= 0))
-		{
-			if (bomb1) 
-				m_map[plPos.x][plPos.y] = '+';
-			else
-				m_map[plPos.x][plPos.y] = ' ';
-			m_players[0].MovePlayer(MOVEMENT::UP);
-			m_map[newPos.x][newPos.y] = '1';
-		}
-	}
-	else if (keyboard.keys[(int)InputKey::DOWN1])
-	{
-		newPos = Vec2(plPos.x, plPos.y + 1);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y <= height))
-		{
-			if (bomb1)
-				m_map[plPos.x][plPos.y] = '+';
-			else
-				m_map[plPos.x][plPos.y] = ' ';
-			m_players[0].MovePlayer(MOVEMENT::DOWN);
-			m_map[newPos.x][newPos.y] = '1';
-
-		}
-	}
-	else if (keyboard.keys[(int)InputKey::RIGHT1])
-	{
-		newPos = Vec2(plPos.x + 1, plPos.y);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x <= width)) {
-			if (bomb1)
-				m_map[plPos.x][plPos.y] = '+';
-			else
-				m_map[plPos.x][plPos.y] = ' ';
-			m_players[0].MovePlayer(MOVEMENT::RIGHT);
-			m_map[newPos.x][newPos.y] = '1';
-		}
-
-	}
-	else if (keyboard.keys[(int)InputKey::LEFT1])
 	{
 		newPos = Vec2(plPos.x - 1, plPos.y);
 		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x > 0))
@@ -98,211 +58,415 @@ void Map::UpdateMap(InputData keyboard)
 			m_map[newPos.x][newPos.y] = '1';
 		}
 	}
+	else if (keyboard.keys[(int)InputKey::DOWN1])
+	{
+		newPos = Vec2(plPos.x + 1, plPos.y);
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x <= width)) {
+			if (bomb1)
+				m_map[plPos.x][plPos.y] = '+';
+			else
+				m_map[plPos.x][plPos.y] = ' ';
+			m_players[0].MovePlayer(MOVEMENT::RIGHT);
+			m_map[newPos.x][newPos.y] = '1';
+		}
+	}
+	else if (keyboard.keys[(int)InputKey::RIGHT1])
+	{
+		newPos = Vec2(plPos.x, plPos.y + 1);
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y <= height))
+		{
+			if (bomb1)
+				m_map[plPos.x][plPos.y] = '+';
+			else
+				m_map[plPos.x][plPos.y] = ' ';
+			m_players[0].MovePlayer(MOVEMENT::DOWN);
+			m_map[newPos.x][newPos.y] = '1';
+		}
+	}
+	else if (keyboard.keys[(int)InputKey::LEFT1])
+	{
+		newPos = Vec2(plPos.x, plPos.y - 1);
+		//char cell = m_map[newPos.x][newPos.y];
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y >= 0))
+		{
+			if (bomb1)
+				m_map[plPos.x][plPos.y] = '+';
+			else
+				m_map[plPos.x][plPos.y] = ' ';
+			m_players[0].MovePlayer(MOVEMENT::UP);
+			m_map[newPos.x][newPos.y] = '1';
+		}
+	}
 
 	//Set player 2 position			-----
 	plPos = m_players[1].GetPos();
 	newPos = m_players[1].GetPos();
 	if (keyboard.keys[(int)InputKey::UP2])
 	{
-		newPos = Vec2(plPos.x, plPos.y - 1);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x > 0))
+		newPos = Vec2(plPos.x - 1, plPos.y);
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x >= 0))
 		{
 			m_map[plPos.x][plPos.y] = ' ';
-			m_players[1].MovePlayer(MOVEMENT::UP);
-			m_map[newPos.x][newPos.y] = '1';
+			m_players[1].MovePlayer(MOVEMENT::LEFT);
+			m_map[newPos.x][newPos.y] = '2';
 		}
 	}
 	else if (keyboard.keys[(int)InputKey::DOWN2])
 	{
-		newPos = Vec2(plPos.x, plPos.y + 1);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x <= width - 1)) {
+		newPos = Vec2(plPos.x + 1, plPos.y);
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.x <= width))
+		{
 			m_map[plPos.x][plPos.y] = ' ';
-			m_players[0].MovePlayer(MOVEMENT::DOWN);
-			m_map[newPos.x][newPos.y] = '1';
+			m_players[1].MovePlayer(MOVEMENT::RIGHT);
+			m_map[newPos.x][newPos.y] = '2';
 		}
 	}
 	else if (keyboard.keys[(int)InputKey::RIGHT2])
 	{
-		newPos = Vec2(plPos.x + 1, plPos.y);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y <= height))
-		{
+		newPos = Vec2(plPos.x, plPos.y + 1);
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y <= height)) {
 			m_map[plPos.x][plPos.y] = ' ';
-			m_players[0].MovePlayer(MOVEMENT::RIGHT);
-			m_map[newPos.x][newPos.y] = '1';
+			m_players[1].MovePlayer(MOVEMENT::DOWN);
+			m_map[newPos.x][newPos.y] = '2';
 		}
 	}
 	else if (keyboard.keys[(int)InputKey::LEFT2])
 	{
-		newPos = Vec2(plPos.x - 1, plPos.y);
-		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y >= 0))
+		newPos = Vec2(plPos.x, plPos.y - 1);
+		if ((m_map[newPos.x][newPos.y] != 'X') && (m_map[newPos.x][newPos.y] != '*') && (newPos.y > 0))
 		{
 			m_map[plPos.x][plPos.y] = ' ';
-			m_players[1].MovePlayer(MOVEMENT::LEFT);
-			m_map[newPos.x][newPos.y] = '1';
+			m_players[1].MovePlayer(MOVEMENT::UP);
+			m_map[newPos.x][newPos.y] = '2';
 		}
 	}
 	
+#pragma region
+	//Bombs p1
+		std::chrono::steady_clock::time_point bombTimep1;
+		plPos = m_players[0].GetPos();
 
-	//Bombs
-	std::chrono::steady_clock::time_point bombTimep1;
-	plPos = m_players[0].GetPos();
+		if (keyboard.keys[(int)InputKey::SPACEBAR])
+		{
+			//spawn bomb
+			this->m_map[plPos.x][plPos.y] = '+';
+			bomb1 = true;
+			//counter 2 sec 
+			bombTimep1 = std::chrono::high_resolution_clock::now();
+		}
+		if (bomb1)
+		{
+			if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep1).count() >= 2)
+			{
+				if (this->m_map[plPos.x - 1][plPos.y] != 'X')
+				{
+					if (this->m_map[plPos.x - 2][plPos.y] != 'X' && this->m_map[plPos.x - 1][plPos.y] != '*')
+					{
+						if (this->m_map[plPos.x - 2][plPos.y] == '*')
+							this->m_players[0].IncrScore(15);
+						this->m_map[plPos.x - 2][plPos.y] = '-';
+						if (this->m_map[plPos.x - 2][plPos.y] == '2')
+						{
+							this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+							this->m_players[0].IncrScore(100);
+						}
+						if (this->m_map[plPos.x - 2][plPos.y] == '1')
+							this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+					}
+					if (this->m_map[plPos.x - 1][plPos.y] == '*')
+						this->m_players[0].IncrScore(15);
+					if (this->m_map[plPos.x - 1][plPos.y] == '2')
+					{
+						this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+						this->m_players[0].IncrScore(100);
+					}
+					if (this->m_map[plPos.x - 1][plPos.y] == '1')
+						this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+					this->m_map[plPos.x - 1][plPos.y] = '-';
+
+				}
+				if (this->m_map[plPos.x + 1][plPos.y] != 'X')
+				{
+					if (this->m_map[plPos.x + 2][plPos.y] != 'X' && this->m_map[plPos.x + 1][plPos.y] != '*')
+					{
+						if (this->m_map[plPos.x + 2][plPos.y] == '*')
+							this->m_players[0].IncrScore(15);
+						if (this->m_map[plPos.x + 2][plPos.y] == '2')
+						{
+							this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+							this->m_players[0].IncrScore(100);
+						}
+						if (this->m_map[plPos.x + 2][plPos.y] == '1')
+							this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+						this->m_map[plPos.x + 2][plPos.y] = '-';
+					}
+					if (this->m_map[plPos.x + 1][plPos.y] == '*')
+						this->m_players[0].IncrScore(15);
+					if (this->m_map[plPos.x + 1][plPos.y] == '2')
+					{
+this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+this->m_players[0].IncrScore(100);
+					}
+					if (this->m_map[plPos.x + 1][plPos.y] == '1')
+						this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+					this->m_map[plPos.x + 1][plPos.y] = '-';
+
+				}
+				if (this->m_map[plPos.x][plPos.y - 1] != 'X')
+				{
+					if (this->m_map[plPos.x][plPos.y - 2] != 'X' && this->m_map[plPos.x][plPos.y - 1] != '*')
+					{
+						if (this->m_map[plPos.x][plPos.y - 2] == '*')
+							this->m_players[0].IncrScore(15);
+						if (this->m_map[plPos.x][plPos.y - 2] == '2')
+						{
+							this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+							this->m_players[0].IncrScore(100);
+						}
+						if (this->m_map[plPos.x][plPos.y - 2] == '1')
+							this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+						this->m_map[plPos.x][plPos.y - 2] = '-';
+					}
+					if (this->m_map[plPos.x][plPos.y - 1] == '*')
+						this->m_players[0].IncrScore(15);
+					if (this->m_map[plPos.x][plPos.y - 1] == '2')
+					{
+						this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+						this->m_players[0].IncrScore(100);
+					}
+					if (this->m_map[plPos.x][plPos.y - 1] == '1')
+						this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+					this->m_map[plPos.x][plPos.y - 1] = '-';
+				}
+				if (this->m_map[plPos.x][plPos.y + 1] != 'X')
+				{
+					if (this->m_map[plPos.x][plPos.y + 2] != 'X' && this->m_map[plPos.x][plPos.y + 1] != '*')
+					{
+						if (this->m_map[plPos.x][plPos.y + 2] == '*')
+							this->m_players[0].IncrScore(15);
+						if (this->m_map[plPos.x][plPos.y + 2] == '2')
+						{
+							this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+							this->m_players[0].IncrScore(100);
+						}
+						if (this->m_map[plPos.x][plPos.y + 2] == '1')
+							this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+						this->m_map[plPos.x][plPos.y + 2] = '-';
+					}
+					if (this->m_map[plPos.x][plPos.y + 1] == '*')
+						this->m_players[0].IncrScore(15);
+					if (this->m_map[plPos.x][plPos.y + 1] == '2')
+					{
+						this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+						this->m_players[0].IncrScore(100);
+					}
+					if (this->m_map[plPos.x][plPos.y + 1] == '1')
+						this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+					this->m_map[plPos.x][plPos.y + 1] = '-';
+				}
+			}
+			if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep1).count() >= 3)
+			{
+				if (this->m_map[plPos.x - 1][plPos.y] == '-')
+				{
+					if (this->m_map[plPos.x - 2][plPos.y] == '-')
+					{
+						this->m_map[plPos.x - 2][plPos.y] = ' ';
+					}
+					this->m_map[plPos.x - 1][plPos.y] = ' ';
+				}
+				if (this->m_map[plPos.x + 1][plPos.y] == '-')
+				{
+					if (this->m_map[plPos.x + 2][plPos.y] == '-')
+					{
+						this->m_map[plPos.x + 2][plPos.y] = ' ';
+					}
+					this->m_map[plPos.x + 1][plPos.y] = ' ';
+				}
+				if (this->m_map[plPos.x][plPos.y - 1] == '-')
+				{
+					if (this->m_map[plPos.x][plPos.y - 2] == '-')
+					{
+						this->m_map[plPos.x][plPos.y - 2] = ' ';
+					}
+					this->m_map[plPos.x][plPos.y - 1] = ' ';
+				}
+				if (this->m_map[plPos.x][plPos.y + 1] == '-')
+				{
+					if (this->m_map[plPos.x][plPos.y + 2] == '-')
+					{
+						this->m_map[plPos.x][plPos.y + 2] = ' ';
+					}
+					this->m_map[plPos.x][plPos.y + 1] = ' ';
+				}
+				bomb1 = false;
+			}
+		}
+#pragma endregion
+
+#pragma region 
+	//Bombs p2
 	
-	if (keyboard.keys[(int)InputKey::RCTL])
-	{
-		//spawn bomb
-		this->m_map[plPos.x][plPos.y] = '+';
-		bomb1 = true;
-		//counter 2 sec 
-		bombTimep1 = std::chrono::high_resolution_clock::now();
-	}
-	if (bomb1)
-	{
-		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep1).count() >= 2)
+	std::chrono::steady_clock::time_point bombTimep2;
+	plPos = m_players[1].GetPos();
+
+		if (keyboard.keys[(int)InputKey::RCTL])
 		{
-		if (this->m_map[plPos.x - 1][plPos.y] != 'X')
+			//spawn bomb
+			this->m_map[plPos.x][plPos.y] = '.';
+			bomb2 = true;
+			//counter 2 sec 
+			bombTimep2 = std::chrono::high_resolution_clock::now();
+		}
+		if (bomb2)
 		{
-			if (this->m_map[plPos.x - 2][plPos.y] != 'X' && this->m_map[plPos.x - 1][plPos.y] != '*')
+			if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep2).count() >= 2)
 			{
-				if(this->m_map[plPos.x - 2][plPos.y] == '*')
-					this->m_players[0].IncrScore(15);
-				this->m_map[plPos.x - 2][plPos.y] = '-';
-				if (this->m_map[plPos.x - 2][plPos.y] == '2')
+				if (this->m_map[plPos.x - 1][plPos.y] != 'X')
 				{
-					this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
-					this->m_players[0].IncrScore(100);
+					if (this->m_map[plPos.x - 2][plPos.y] != 'X' && this->m_map[plPos.x - 1][plPos.y] != '*')
+					{
+						if (this->m_map[plPos.x - 2][plPos.y] == '*')
+							this->m_players[1].IncrScore(15);
+						this->m_map[plPos.x - 2][plPos.y] = '/';
+						if (this->m_map[plPos.x - 2][plPos.y] == '1')
+						{
+							this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+							this->m_players[1].IncrScore(100);
+						}
+						if (this->m_map[plPos.x - 2][plPos.y] == '2')
+							this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+					}
+					if (this->m_map[plPos.x - 1][plPos.y] == '*')
+						this->m_players[1].IncrScore(15);
+					if (this->m_map[plPos.x - 1][plPos.y] == '1')
+					{
+						this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+						this->m_players[1].IncrScore(100);
+					}
+					if (this->m_map[plPos.x - 1][plPos.y] == '2')
+						this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+					this->m_map[plPos.x - 1][plPos.y] = '/';
+
 				}
-				if(this->m_map[plPos.x - 2][plPos.y] == '1')
-					this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
-			}
-			if(this->m_map[plPos.x - 1][plPos.y] == '*')
-				this->m_players[0].IncrScore(15);
-			if (this->m_map[plPos.x - 1][plPos.y] == '2') 
-			{
-				this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
-				this->m_players[0].IncrScore(100);
-			}
-			if (this->m_map[plPos.x - 1][plPos.y] == '1')
-				this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
-			this->m_map[plPos.x - 1][plPos.y] = '-';
-			
-		}
-		if (this->m_map[plPos.x + 1][plPos.y] != 'X')
-		{
-			if (this->m_map[plPos.x + 2][plPos.y] != 'X' && this->m_map[plPos.x + 1][plPos.y] != '*')
-			{
-				if(this->m_map[plPos.x + 2][plPos.y] == '*')
-					this->m_players[0].IncrScore(15);
-				if (this->m_map[plPos.x + 2][plPos.y] == '2')
+				if (this->m_map[plPos.x + 1][plPos.y] != 'X')
 				{
-					this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
-					this->m_players[0].IncrScore(100);
+					if (this->m_map[plPos.x + 2][plPos.y] != 'X' && this->m_map[plPos.x + 1][plPos.y] != '*')
+					{
+						if (this->m_map[plPos.x + 2][plPos.y] == '*')
+							this->m_players[1].IncrScore(15);
+						if (this->m_map[plPos.x + 2][plPos.y] == '1')
+						{
+							this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+							this->m_players[1].IncrScore(100);
+						}
+						if (this->m_map[plPos.x + 2][plPos.y] == '2')
+							this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+						this->m_map[plPos.x + 2][plPos.y] = '/';
+					}
+					if (this->m_map[plPos.x + 1][plPos.y] == '*')
+						this->m_players[1].IncrScore(15);
+					if (this->m_map[plPos.x + 1][plPos.y] == '1')
+					{
+						this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+						this->m_players[1].IncrScore(100);
+					}
+					if (this->m_map[plPos.x + 1][plPos.y] == '2')
+						this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+					this->m_map[plPos.x + 1][plPos.y] = '/';
+
 				}
-				if(this->m_map[plPos.x + 2][plPos.y] == '1')
-					this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
-				this->m_map[plPos.x + 2][plPos.y] = '-';
-			}
-			if(this->m_map[plPos.x + 1][plPos.y] == '*')
-				this->m_players[0].IncrScore(15);
-			if (this->m_map[plPos.x + 1][plPos.y] == '2')
-			{
-				this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
-				this->m_players[0].IncrScore(100);
-			}
-			if (this->m_map[plPos.x + 1][plPos.y] == '1')
-				this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
-			this->m_map[plPos.x + 1][plPos.y] = '-';
-			
-		}
-		if (this->m_map[plPos.x][plPos.y - 1] != 'X')
-		{
-			if (this->m_map[plPos.x][plPos.y - 2] != 'X' && this->m_map[plPos.x][plPos.y - 1] != '*')
-			{
-				if(this->m_map[plPos.x][plPos.y - 2] == '*')
-					this->m_players[0].IncrScore(15);
-				if (this->m_map[plPos.x][plPos.y - 2] == '2')
+				if (this->m_map[plPos.x][plPos.y - 1] != 'X')
 				{
-					this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
-					this->m_players[0].IncrScore(100);
+					if (this->m_map[plPos.x][plPos.y - 2] != 'X' && this->m_map[plPos.x][plPos.y - 1] != '*')
+					{
+						if (this->m_map[plPos.x][plPos.y - 2] == '*')
+							this->m_players[1].IncrScore(15);
+						if (this->m_map[plPos.x][plPos.y - 2] == '1')
+						{
+							this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+							this->m_players[1].IncrScore(100);
+						}
+						if (this->m_map[plPos.x][plPos.y - 2] == '2')
+							this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+						this->m_map[plPos.x][plPos.y - 2] = '/';
+					}
+					if (this->m_map[plPos.x][plPos.y - 1] == '*')
+						this->m_players[1].IncrScore(15);
+					if (this->m_map[plPos.x][plPos.y - 1] == '1')
+					{
+						this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+						this->m_players[1].IncrScore(100);
+					}
+					if (this->m_map[plPos.x][plPos.y - 1] == '2')
+						this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+					this->m_map[plPos.x][plPos.y - 1] = '/';
 				}
-				if(this->m_map[plPos.x][plPos.y - 2] == '1')
-					this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
-				this->m_map[plPos.x][plPos.y - 2] = '-';
-			}
-			if(this->m_map[plPos.x][plPos.y - 1] == '*')
-				this->m_players[0].IncrScore(15);
-			if (this->m_map[plPos.x][plPos.y - 1] == '2')
-			{
-				this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
-				this->m_players[0].IncrScore(100);
-			}
-			if (this->m_map[plPos.x][plPos.y - 1] == '1')
-				this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
-			this->m_map[plPos.x][plPos.y - 1] = '-';
-		}
-		if (this->m_map[plPos.x][plPos.y + 1] != 'X')
-		{
-			if (this->m_map[plPos.x][plPos.y + 2] != 'X' && this->m_map[plPos.x][plPos.y + 1] != '*')
-			{
-				if(this->m_map[plPos.x][plPos.y + 2] == '*')
-					this->m_players[0].IncrScore(15);
-				if (this->m_map[plPos.x][plPos.y + 2] == '2')
+				if (this->m_map[plPos.x][plPos.y + 1] != 'X')
 				{
-					this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
-					this->m_players[0].IncrScore(100);
+					if (this->m_map[plPos.x][plPos.y + 2] != 'X' && this->m_map[plPos.x][plPos.y + 1] != '*')
+					{
+						if (this->m_map[plPos.x][plPos.y + 2] == '*')
+							this->m_players[1].IncrScore(15);
+						if (this->m_map[plPos.x][plPos.y + 2] == '1')
+						{
+							this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+							this->m_players[1].IncrScore(100);
+						}
+						if (this->m_map[plPos.x][plPos.y + 2] == '2')
+							this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+						this->m_map[plPos.x][plPos.y + 2] = '/';
+					}
+					if (this->m_map[plPos.x][plPos.y + 1] == '*')
+						this->m_players[1].IncrScore(15);
+					if (this->m_map[plPos.x][plPos.y + 1] == '1')
+					{
+						this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
+						this->m_players[1].IncrScore(100);
+					}
+					if (this->m_map[plPos.x][plPos.y + 1] == '2')
+						this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
+					this->m_map[plPos.x][plPos.y + 1] = '/';
 				}
-				if(this->m_map[plPos.x][plPos.y + 2] == '1')
-					this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
-				this->m_map[plPos.x][plPos.y + 2] = '-';
 			}
-			if (this->m_map[plPos.x][plPos.y + 1] == '*')
-				this->m_players[0].IncrScore(15);
-			if (this->m_map[plPos.x][plPos.y + 1] == '2')
+			if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep2).count() >= 3)
 			{
-				this->m_players[1].SetLives(this->m_players[1].GetLives() - 1);
-				this->m_players[0].IncrScore(100);
-			}
-			if (this->m_map[plPos.x][plPos.y + 1] == '1')
-				this->m_players[0].SetLives(this->m_players[0].GetLives() - 1);
-			this->m_map[plPos.x][plPos.y + 1] = '-';
-		}
-		}
-		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - bombTimep1).count() >= 3)
-		{
-			if (this->m_map[plPos.x - 1][plPos.y] == '-')
-			{
-				if (this->m_map[plPos.x - 2][plPos.y] == '-' )
+				if (this->m_map[plPos.x - 1][plPos.y] == '/')
 				{
-					this->m_map[plPos.x - 2][plPos.y] = ' ';
+					if (this->m_map[plPos.x - 2][plPos.y] == '/')
+					{
+						this->m_map[plPos.x - 2][plPos.y] = ' ';
+					}
+					this->m_map[plPos.x - 1][plPos.y] = ' ';
 				}
-				this->m_map[plPos.x - 1][plPos.y] = ' ';
-			}
-			if (this->m_map[plPos.x + 1][plPos.y] == '-')
-			{
-				if (this->m_map[plPos.x + 2][plPos.y] == '-')
+				if (this->m_map[plPos.x + 1][plPos.y] == '/')
 				{
-					this->m_map[plPos.x + 2][plPos.y] = ' ';
+					if (this->m_map[plPos.x + 2][plPos.y] == '/')
+					{
+						this->m_map[plPos.x + 2][plPos.y] = ' ';
+					}
+					this->m_map[plPos.x + 1][plPos.y] = ' ';
 				}
-				this->m_map[plPos.x + 1][plPos.y] = ' ';
-			}
-			if (this->m_map[plPos.x][plPos.y - 1] == '-')
-			{
-				if (this->m_map[plPos.x][plPos.y - 2] == '-')
+				if (this->m_map[plPos.x][plPos.y - 1] == '/')
 				{
-					this->m_map[plPos.x][plPos.y - 2] = ' ';
+					if (this->m_map[plPos.x][plPos.y - 2] == '/')
+					{
+						this->m_map[plPos.x][plPos.y - 2] = ' ';
+					}
+					this->m_map[plPos.x][plPos.y - 1] = ' ';
 				}
-				this->m_map[plPos.x][plPos.y - 1] = ' ';
-			}
-			if (this->m_map[plPos.x][plPos.y + 1] == '-')
-			{
-				if (this->m_map[plPos.x][plPos.y + 2] == '-')
+				if (this->m_map[plPos.x][plPos.y + 1] == '/')
 				{
-					this->m_map[plPos.x][plPos.y + 2] = ' ';
+					if (this->m_map[plPos.x][plPos.y + 2] == '/')
+					{
+						this->m_map[plPos.x][plPos.y + 2] = ' ';
+					}
+					this->m_map[plPos.x][plPos.y + 1] = ' ';
 				}
-				this->m_map[plPos.x][plPos.y + 1] = ' ';
+				bomb1 = false;
 			}
-			bomb1 = false;
-		}
-	}
+		}	
+#pragma endregion
 
 	//Game ended
 	if (this->m_players[0].GetLives() == 0) gameEnd = true;
@@ -328,8 +492,10 @@ void Map::PrintMap()
 			else if (m_map[i][j] == '2')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 221);//player 2
 			else if (m_map[i][j] == 'X')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 136);//muros x
 			else if (m_map[i][j] == '*')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 119);//muros destruct *
-			else if (m_map[i][j] == '+')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 204);//bomba *
-			else if (m_map[i][j] == '-')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 238);//bomba destruct *
+			else if (m_map[i][j] == '+')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 204);//bomba * p1
+			else if (m_map[i][j] == '-')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 238);//bomba destruct * p1
+			else if (m_map[i][j] == '.')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 204);//bomba * p2
+			else if (m_map[i][j] == '/')SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 238);//bomba destruct * p2
 			std::cout << m_map[i][j] << ' ';
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
 		}

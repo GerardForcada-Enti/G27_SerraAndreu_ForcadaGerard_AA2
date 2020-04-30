@@ -2,14 +2,15 @@
 
 Game::Game()
 {
-	state = GameState::INIT;
+	state = GameState::PLAY;
 	board.InitializeMap();
 }
 
 void Game::Play()
 {
-	int timer = 600;
-	float secondsPassed = 0.0f;
+	std::chrono::steady_clock::time_point timerChrono;
+	std::chrono::seconds timer(60);
+	bool enterPlay = true;
 	while (!keyboard.keys[(int)InputKey::ESC])
 	{
 		switch (state)
@@ -27,20 +28,23 @@ void Game::Play()
 			break;
 		case GameState::PLAY:
 		{	
+			if (enterPlay)
+			{
+				timerChrono = std::chrono::high_resolution_clock::now();
+				enterPlay = false;
+			}
 			keyboard.UpdateKeys();
 			system("cls");
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 185);
 			std::cout << "-*-*-GAME-*-*-" << std::endl;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			std::cout << "Time: " << timer/10 << 's';
+			std::cout << "Time: " << (int)(timer - std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - timerChrono)) << 's';
 			board.PrintMap();
 			board.UpdateMap(keyboard);
-			if (keyboard.keys[(int)InputKey::PAUSE])  state = GameState::PAUSE; 
-			if(board.GetGameEnd()) state = GameState::GAMEOVER;
+			if (keyboard.keys[(int)InputKey::PAUSE])  state = GameState::PAUSE; enterPlay = true;
+			if (board.GetGameEnd()) state = GameState::GAMEOVER; enterPlay = true;
 			Sleep(60);
-			secondsPassed += 0.1f;
-			if ((int)secondsPassed == 10)secondsPassed = 0.0f; timer--;
-		}
+			}
 			break;
 		case GameState::PAUSE:
 		{

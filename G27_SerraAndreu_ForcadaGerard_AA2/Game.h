@@ -18,7 +18,7 @@ private:
 
 
 /*
--bombes (player 2) mes bugs
+-bombes bugs
 
--Moviment player2
+-chrono
 */
