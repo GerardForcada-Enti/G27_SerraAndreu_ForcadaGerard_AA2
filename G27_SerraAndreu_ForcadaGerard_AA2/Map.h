@@ -35,4 +35,5 @@ public:
 	void UpdateMap(InputData keyboard, int timer); ///Check colisions i rebre la nova pos
 	void PrintMap();
 	bool GetGameEnd();
+	int GetPlayerNumScore(int player);
 };

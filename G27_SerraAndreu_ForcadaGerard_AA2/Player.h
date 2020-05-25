@@ -19,4 +19,5 @@ public:
 	int GetLives();
 	void IncrScore(int val);
 	void SetPos(Vec2 n_pos);
+	int GetScore();
 };

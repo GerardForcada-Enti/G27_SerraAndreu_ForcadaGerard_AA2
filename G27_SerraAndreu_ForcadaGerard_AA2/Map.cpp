@@ -559,3 +559,9 @@ bool Map::GetGameEnd()
 {
 	return this->gameEnd;
 }
+
+int Map::GetPlayerNumScore(int player)
+{
+	if(player == 0 || player == 1)
+		return this->m_players[player].GetScore();
+}

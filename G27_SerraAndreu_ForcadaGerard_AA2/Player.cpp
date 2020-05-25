@@ -50,3 +50,8 @@ void Player::SetPos(Vec2 n_pos)
 {
 	this->pos = n_pos;
 }
+
+int Player::GetScore()
+{
+	return score;
+}

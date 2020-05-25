@@ -1,6 +1,7 @@
 #pragma once
 #include "Map.h"
 #include "InputManager.h"
+#include "ranking.h"
 
 class Game
 {
@@ -9,9 +10,9 @@ public:
 
 	void Play();
 private:
-	enum GameState { INIT, PLAY, PAUSE, GAMEOVER, COUNT };
+	enum GameState { SPLASHSCREEN, MENU , PLAY, PAUSE, GAMEOVER, RANKING , COUNT };
 	GameState state;
 	Map board;
 	InputData keyboard;
-	
+	Ranking ranking;
 };
